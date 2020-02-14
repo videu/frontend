@@ -1,0 +1,10 @@
+.vscode/
+build/
+tsbuild/
+node_modules/
+text/integration/screenshots-current/
+_site/
+.DS_store
+/.env
+src/**/*.js
+/env.js

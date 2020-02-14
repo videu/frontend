@@ -1,0 +1,103 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+<!--
+    Copyright (c) 2020 Felix Kopp <sandtler@sandtler.club>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY of FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <title>videu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Webvideo Made in Germany">
+
+    <!-- for window._videuEnv -->
+    <script src="env.js"></script>
+
+    <!-- Do not edit, set `basePath` in polymer.json instead -->
+    <base href="/">
+
+    <link rel="manifest" href="manifest.json">
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('service-worker.js', {
+                    scope: '/',
+                });
+            });
+        }
+
+        window.process = {
+            env: {
+                NODE_ENV: 'production',
+            },
+        };
+    </script>
+
+    <style>
+        * {
+            /* "Fixing Broken Languages", vol. 1: CSS. */
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Helvetica", "Arial", "Ubuntu", "Liberation Sans",
+                         sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+                         "Segoe UI Symbol";
+            line-height: 1.5;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+</head>
+<body>
+    <vid-eu appTitle="videu" active></vid-eu>
+
+    <noscript>
+        Please enable JavaScript to view this website.
+    </noscript>
+
+    <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js">
+    </script>
+    <script type="module" src="tsbuild/components/vid-eu.js"></script>
+    <script>
+        /* The stupid-user-protect-i-nator™ */
+        window._videuEnv === 'development' || console.log(
+            '%c\u26a0 %cSTOP%c \u26a0%c\n'
+            + '%cThis is a browser feature intended for web developers only. '
+            + 'If someone told you to paste something into this window, '
+            + 'they are almost certainly trying to steal your account! There '
+            + 'is literally nothing in here that would be useful to regular '
+            + 'users. If you don\'t know EXACTLY what you\'re doing, close '
+            + 'this window by pressing the F12 key to stay safe. If you want '
+            + 'to learn more about how you could be "hacked", read this: '
+            + 'https://en.wikipedia.org/wiki/Self-XSS'
+            + '%c\u26a0 %cSTOP%c \u26a0',
+            'background: red; color: white; font-size: xxx-large; font-family: sans-serif; font-weight: 400; padding: 4px 0 4px 4px',
+            'background: red; color: white; font-size: xxx-large; font-family: sans-serif; font-weight: 700; padding: 4px 0',
+            'background: red; color: white; font-size: xxx-large; font-family: sans-serif; font-weight: 400; padding: 4px 4px 4px 0',
+            'font-size: large',
+            'background: yellow; color: black; font-size: medium; font-family: sans-serif; padding: 4px; border: 4px solid red',
+            'background: red; color: white; font-size: xxx-large; font-family: sans-serif; font-weight: 400; padding: 4px 0 4px 4px',
+            'background: red; color: white; font-size: xxx-large; font-family: sans-serif; font-weight: 700; padding: 4px 0',
+            'background: red; color: white; font-size: xxx-large; font-family: sans-serif; font-weight: 400; padding: 4px 4px 4px 0',
+        );
+    </script>
+</body>
+</html>
