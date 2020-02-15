@@ -1,5 +1,7 @@
 # The videu Web Frontend
 
+[![Build Status](https://jenkins.sandtler.club/buildStatus/icon?job=videu%2Ffrontend)](https://jenkins.sandtler.club/job/videu/job/frontend/)
+
 This is the source tree of the videu web frontend, as used in the
 [FreeTube](https://freetube.eu/) platform.
 
