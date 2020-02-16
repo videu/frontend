@@ -21,20 +21,24 @@
 
 import { css } from 'lit-element';
 
-import { ColorStyles } from './color';
-import { TypographyStyles } from './typography';
+export const ColorStyles = css`
+* {
+    color: var(--color-text);
+}
 
-export const SharedStyles = [
-    ColorStyles,
-    TypographyStyles,
-    css`
-    * {
-        box-sizing: border-box;
-    }
+h1, a {
+    color: var(--color-primary);
+}
 
-    :host {
-        display: block;
-        box-sizing: border-box;
-    }
-    `,
-];
+h2 {
+    color: var(--color-primary-dark);
+}
+
+:host {
+    --box-shadow-1: 0  1px  3px rgba(0, 0, 0, .12), 0  1px  2px rgba(0, 0, 0, .24);
+    --box-shadow-2: 0  3px  6px rgba(0, 0, 0, .16), 0  3px  6px rgba(0, 0, 0, .23);
+    --box-shadow-3: 0 10px 20px rgba(0, 0, 0, .19), 0  6px  6px rgba(0, 0, 0, .23);
+    --box-shadow-4: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22);
+    --box-shadow-5: 0 19px 38px rgba(0, 0, 0, .30), 0 15px 12px rgba(0, 0, 0, .22);
+}
+`;

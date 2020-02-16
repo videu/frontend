@@ -21,20 +21,26 @@
 
 import { css } from 'lit-element';
 
-import { ColorStyles } from './color';
-import { TypographyStyles } from './typography';
+export const TypographyStyles = css`
+* {
+    font-family: Roboto, sans-serif;
+    font-size: 1rem;
+}
 
-export const SharedStyles = [
-    ColorStyles,
-    TypographyStyles,
-    css`
-    * {
-        box-sizing: border-box;
-    }
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Fira Sans';
+}
 
-    :host {
-        display: block;
-        box-sizing: border-box;
-    }
-    `,
-];
+h1 {
+    font-size: 24rem;
+}
+
+h2 {
+    color: var(--color-primary-dark);
+}
+
+a, a:visited, a:active, a:focus, a:hover {
+    font-weight: 700;
+    text-decoration: underline;
+}
+`;
