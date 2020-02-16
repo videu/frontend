@@ -32,6 +32,7 @@ import { SharedStyles } from '../style/shared-styles';
 import { PathRouter } from './core/path-router';
 
 import './core/page-switch';
+import './videu-header';
 
 /**
  * The application's root shell containing all other components.
@@ -89,11 +90,14 @@ export class VidEu extends connect(store)(PathRouter) {
      */
     protected render() {
         return html`
-        <main role="main" class="main-content">
-            <page-switch page="${this._page}">
-                <view-index page-name="index"></view-index>
-            </page-switch>
-        </main>
+        <div id="mainContainer">
+            <videu-header appTitle="${this.appTitle}"></videu-header>
+            <main role="main" class="main-content">
+                <page-switch page="${this._page}">
+                    <view-index page-name="index"></view-index>
+                </page-switch>
+            </main>
+        </div>
         <footer>Connection: ${this._offline ? 'offline' : 'online'}</footer>
         `;
     }
