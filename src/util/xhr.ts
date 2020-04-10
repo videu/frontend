@@ -1,9 +1,10 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
 /**
- * @file Simple utilityfor performing asynchronous HTTP requests.
+ * Simple utility for performing asynchronous HTTP requests.
+ * @packageDocumentation
  *
  * @license
- * Copyright (c) 2020 Felix Kopp <sandtler@santler.club>
+ * Copyright (c) 2020 Felix Kopp <sandtler@sandtler.club>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -19,6 +20,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/** Base interface for all successful responses from the backend. */
+export interface IBackendSuccessResponse {
+    /** The error flag. */
+    err: false;
+}
+
+/** An error response from the backend. */
+export interface IBackendErrorResponse {
+    /** The error flag. */
+    err: true;
+    /** The error message. */
+    msg: string;
+}
+
+/**
+ * Represents any response from the videu backend server.
+ */
+export type BackendResponse = IBackendErrorResponse | IBackendSuccessResponse;
+
 /**
  * Perform a raw HTTP request.
  * Used internally only.
@@ -26,9 +46,13 @@
  * @param method The HTTP request method (in capital letters)
  * @param url The HTTP request url.
  * @param body The request body as a JSON object, if applicable.
- * @return The response, parsed as JSON
+ * @typeParam T The type of the response body.
+ * @returns The response, parsed as JSON.
+ * @throws An Error if the response has its `err` flag set to `true`.
+ *     The error's message will be equal to the `msg` field of the response.
  */
-function requestJSON(method: string, url: string, body?: any): Promise<any> {
+function requestJSON<T extends object>(method: string, url: string, body?: object):
+Promise<T & IBackendSuccessResponse> {
     return new Promise((resolve, reject) => {
         const xhr: XMLHttpRequest = new XMLHttpRequest();
         xhr.overrideMimeType('application/json');
@@ -39,19 +63,23 @@ function requestJSON(method: string, url: string, body?: any): Promise<any> {
                 return;
             }
 
-            if (xhr.status >= 200 && xhr.status < 300) {
-                try {
-                    resolve(JSON.parse(xhr.responseText));
-                } catch (err) {
-                    reject(err);
-                }
+            let data: BackendResponse;
+            try {
+                data = JSON.parse(xhr.responseText);
+            } catch (err) {
+                reject(err);
+                return;
+            }
+
+            if (data.err) {
+                reject(new Error(data.msg));
             } else {
-                reject(xhr.status);
+                resolve(data as T & IBackendSuccessResponse);
             }
         };
 
         if (typeof body === 'object' && body !== null) {
-            xhr.send(body);
+            xhr.send(JSON.stringify(body));
         } else {
             xhr.send();
         }
@@ -59,19 +87,76 @@ function requestJSON(method: string, url: string, body?: any): Promise<any> {
 }
 
 /**
- * Perform an HTTP GET request against the specified URL.
+ * Perform an HTTP GET request to the specified URL.
  *
  * @param url The URL to fetch.
- * @return The response, decoded as JSON.
+ * @param body The requeest body.
+ * @typeParam T The type of the response body.
+ * @returns The response, decoded as JSON.
+ * @throws An Error if the response has its `err` flag set to `true`.
+ *     The error's message will be equal to the `msg` field of the response.
  */
-export function getJSON(url: string): Promise<any> {
-    return requestJSON('GET', url);
+export function getJSON<T extends object>(url: string, body?: object):
+Promise<T & IBackendSuccessResponse> {
+    return requestJSON('GET', url, body);
 }
 
-export function postJSON(url: string, body: any): Promise<any> {
+/**
+ * Perform an HTTP POST request to the specified URL.
+ *
+ * @param url The URL to fetch.
+ * @param body The requeest body.
+ * @typeParam T The type of the response body.
+ * @returns The response, decoded as JSON.
+ * @throws An Error if the response has its `err` flag set to `true`.
+ *     The error's message will be equal to the `msg` field of the response.
+ */
+export function postJSON<T extends object>(url: string, body?: object):
+Promise<T & IBackendSuccessResponse> {
     return requestJSON('POST', url, body);
 }
 
-export function putJSON(url: string, body: any): Promise<any> {
+/**
+ * Perform an HTTP PUT request to the specified URL.
+ *
+ * @param url The URL to fetch.
+ * @param body The requeest body.
+ * @typeParam T The type of the response body.
+ * @returns The response, decoded as JSON.
+ * @throws An Error if the response has its `err` flag set to `true`.
+ *     The error's message will be equal to the `msg` field of the response.
+ */
+export function putJSON<T extends object>(url: string, body?: object):
+Promise<T & IBackendSuccessResponse> {
     return requestJSON('PUT', url, body);
+}
+
+/**
+ * Perform an HTTP DELETE request to the specified URL.
+ *
+ * @param url The URL to fetch.
+ * @param body The requeest body.
+ * @typeParam T The type of the response body.
+ * @returns The response, decoded as JSON.
+ * @throws An Error if the response has its `err` flag set to `true`.
+ *     The error's message will be equal to the `msg` field of the response.
+ */
+export function deleteJSON<T extends object>(url: string, body?: object):
+Promise<T & IBackendSuccessResponse> {
+    return requestJSON('DELETE', url, body);
+}
+
+/**
+ * Perform an HTTP PATCH request to the specified URL.
+ *
+ * @param url The URL to fetch.
+ * @param body The requeest body.
+ * @typeParam T The type of the response body.
+ * @returns The response, decoded as JSON.
+ * @throws An Error if the response has its `err` flag set to `true`.
+ *     The error's message will be equal to the `msg` field of the response.
+ */
+export function patchJSON<T extends object>(url: string, body?: object):
+Promise<T & IBackendSuccessResponse> {
+    return requestJSON('PATCH', url, body);
 }
