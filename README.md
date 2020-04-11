@@ -29,6 +29,11 @@ You might be able to run it on Windows, but this is not supported and highly
 discouraged.  If you absolutely need to, use the Windows Subsystem for Linux.
 
 Clone the repository, open a shell in the project's root directory and type
-`npm i` to install all dependencies.  Then, type `npm start` to spin up a
+`npm i` to install all dependencies.  Copy the `.env.default` file to `.env` and
+adjust its configuration values as needed.  Then, type `npm start` to spin up a
 local development server.  You might want to run the corresponding
 [backend server](https://github.com/videu/backend) as well.
+NOTE: If the opened browser window is empty, you have to manually refresh the
+page once.  That can happen if `es-dev-server` opens the browser window before
+`tsc` has finished building.  You only have to do this the first time because
+`es-dev-server` is watching changes in the output directory of `tsc`.

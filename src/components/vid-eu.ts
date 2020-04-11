@@ -19,7 +19,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { html, css, property, PropertyValues, customElement } from 'lit-element';
+import {
+    html,
+    css,
+    property,
+    internalProperty,
+    PropertyValues,
+    customElement,
+} from 'lit-element';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { installOfflineWatcher } from 'pwa-helpers/network.js';
 import { installRouter } from 'pwa-helpers/router.js';
@@ -43,14 +50,14 @@ export class VidEu extends connect(store)(PathRouter) {
      * The app title.
      * Defaults to `'videu'`.
      */
-    @property({type: String})
-    public appTitle: string = 'videu';
+    @property({type: String, attribute: 'app-name'})
+    public appName: string = window._videu.appName;
 
     /**
      * Whether we are currently connected to the Internet.
      */
-    @property({type: Boolean})
-    private _offline: boolean = false;
+    @internalProperty()
+    private offline: boolean = false;
 
     /**
      * @inheritdoc
@@ -90,14 +97,14 @@ export class VidEu extends connect(store)(PathRouter) {
     protected render() {
         return html`
         <div id="mainContainer">
-            <videu-header appTitle="${this.appTitle}"></videu-header>
+            <videu-header app-name="${this.appName}"></videu-header>
             <main role="main" class="main-content">
-                <page-switch page="${this._page}">
+                <page-switch page="${this.page}">
                     <view-index page-name="index"></view-index>
                 </page-switch>
             </main>
         </div>
-        <footer>Connection: ${this._offline ? 'offline' : 'online'}</footer>
+        <footer>Connection: ${this.offline ? 'offline' : 'online'}</footer>
         `;
     }
 
@@ -122,9 +129,8 @@ export class VidEu extends connect(store)(PathRouter) {
     protected updated(changedProps: PropertyValues) {
         super.updated(changedProps);
 
-        if (changedProps.has('_page')) {
-            console.log(this._page);
-            const pageTitle = this.appTitle + ' – ' + this._page;
+        if (changedProps.has('page')) {
+            const pageTitle = this.appName + ' – ' + this.page;
             updateMetadata({
                 title: pageTitle,
                 description: pageTitle,
@@ -138,10 +144,14 @@ export class VidEu extends connect(store)(PathRouter) {
      * @override
      */
     public stateChanged(state: RootState) {
-        super.stateChanged(state);
+        if (!state.app) {
+            return;
+        }
 
-        this.path = state.app!.path;
-        this._offline = state.app!.offline ? true : false;
+        this.offline = state.app.offline;
+
+        /* make a copy to ensure we aren't accidentally mutating the state */
+        this.path = state.app.path.slice();
     }
 
 }

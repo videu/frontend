@@ -31,11 +31,11 @@ import { VideuElement } from './core/videu-element';
 export class VideuHeader extends VideuElement {
 
     /**
-     * The app title.
+     * The app name.
      * Defaults to `'videu'`.
      */
-    @property({type: String})
-    public appTitle: string = 'videu';
+    @property({type: String, attribute: 'app-name', reflect: true})
+    public appName: string = 'videu';
 
     /**
      * @inheritdoc

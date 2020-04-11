@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { customElement, html, property, PropertyValues, css } from 'lit-element';
+import { customElement, html, property, PropertyValues, css, query } from 'lit-element';
 
 import { VideuElement } from './videu-element';
 import { SharedStyles } from '../../style/shared-styles';
@@ -44,13 +44,16 @@ export class PageSwitch extends VideuElement {
      * matches this value to become visible, the rest is hidden.
      */
     @property({type: String})
-    public page: string = '';
+    public page?: string;
+
+    @query('#pages')
+    private pagesSlot?: HTMLSlotElement;
 
     /**
      * @inheritdoc
      * @override
      */
-    static get styles() {
+    public static get styles() {
         return [
             SharedStyles,
             css`
@@ -80,15 +83,16 @@ export class PageSwitch extends VideuElement {
     protected updated(changedProps: PropertyValues) {
         super.updated(changedProps);
 
-        console.log(this.page);
-
-        if (!this.shadowRoot || !changedProps.has('page')) {
+        if (!changedProps.has('page')) {
             return;
         }
 
-        const slot = this.shadowRoot.getElementById('pages');
-        const pageElems = (slot as HTMLSlotElement)!.assignedElements();
+        const slot = this.pagesSlot;
+        if (slot === undefined) {
+            return;
+        }
 
+        const pageElems = slot.assignedElements();
         if (!pageElems) {
             return;
         }

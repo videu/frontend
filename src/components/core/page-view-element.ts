@@ -29,7 +29,7 @@ export abstract class PageViewElement extends VideuElement {
      * Determines whether this element is currently being displayed.
      */
     @property({type: Boolean})
-    protected active: boolean = false;
+    public active: boolean = false;
 
     /**
      * @inheritdoc

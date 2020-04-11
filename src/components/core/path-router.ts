@@ -19,8 +19,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { internalProperty, property, PropertyValues } from 'lit-element';
+
 import { PageViewElement } from './page-view-element';
-import { property, PropertyValues } from 'lit-element';
 
 /**
  * Abstract base class for all routing elements.
@@ -32,25 +33,34 @@ export class PathRouter extends PageViewElement {
 
     /**
      * The current path, split into the individual segments.
+     * Updating this property will also update `page` and `childPath`.
      */
-    @property({type: [String]})
+    @property({
+        type: [String],
+        converter: {
+            toAttribute: val => JSON.stringify(val),
+            fromAttribute: str => str ? JSON.parse(str) : [''],
+        }
+    })
     public path: string[] = [''];
 
     /**
      * The path without the top-level element.
-     * Pass this to all child elements that are also extending
-     * the `PathRouter` class.
+     * Pass this to all child elements that are also extending the `PathRouter`
+     * class.  **NEVER** set this property directly, it gets updated
+     * automatically when {@linkcode .path} changes.
      */
-    @property({type: [String]})
-    protected _childPath: string[] = [''];
+    @internalProperty()
+    protected childPath: string[] = [''];
 
     /**
-     * The page that is currently being displayed in this element,
-     * i.e. the first element of the `path` array.
-     * Pass this to the `page-switch` if the element has one.
+     * The page that is currently being displayed in this element, i.e. the
+     * first element of the `path` array.  Pass this to the `page-switch` if the
+     * element has one.  **NEVER** set this property directly, it gets updated
+     * automatically when {@linkcode .path} changes.
      */
-    @property({type: String})
-    protected _page: string = '';
+    @internalProperty()
+    protected page: string = '';
 
     /**
      * @inheritdoc
@@ -60,8 +70,18 @@ export class PathRouter extends PageViewElement {
         super.updated(changedProps);
 
         if (changedProps.has('path')) {
-            this._page = this.path[0];
-            this._childPath = this.path.slice(1);
+            if (this.path.length === 0) {
+                this.page = '';
+                this.childPath = [''];
+            } else {
+                this.page = this.path[0];
+
+                if (this.path.length === 1) {
+                    this.childPath = [''];
+                } else {
+                    this.childPath = this.path.slice(1);
+                }
+            }
         }
     }
 
