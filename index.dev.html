@@ -1,0 +1,69 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+<!--
+    Copyright (c) 2020 Felix Kopp <sandtler@sandtler.club>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY of FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!doctype html>
+<html lang="de">
+
+<!--
+    TODO: Make this file obsolete, the only difference between it and index.html
+          is the script filename included at the bottom
+-->
+
+<head>
+    <meta charset="utf-8">
+    <title>videu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Webvideo Made in Germany">
+
+    <!-- for window._videu and window.process -->
+    <script src="env.js"></script>
+
+    <!-- Do not edit, set `basePath` in polymer.json instead -->
+    <base href="/">
+
+    <link rel="manifest" href="manifest.json">
+
+    <style>
+        * {
+            /* "Fixing Broken Languages", vol. 1: CSS. */
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Helvetica", "Arial", "Ubuntu", "Liberation Sans",
+                sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+                "Segoe UI Symbol";
+            line-height: 1.5;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+</head>
+
+<body>
+    <vid-eu appTitle="videu" active></vid-eu>
+
+    <noscript>
+        Please enable JavaScript to view this website.
+    </noscript>
+
+    <script type="module" src="./tsbuild/components/vid-eu.js"></script>
+</body>
+</html>

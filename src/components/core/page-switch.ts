@@ -87,7 +87,7 @@ export class PageSwitch extends VideuElement {
         }
 
         const slot = this.shadowRoot.getElementById('pages');
-        const pageElems = (slot as HTMLSlotElement)?.assignedElements();
+        const pageElems = (slot as HTMLSlotElement)!.assignedElements();
 
         if (!pageElems) {
             return;

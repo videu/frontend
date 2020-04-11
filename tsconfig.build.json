@@ -2,16 +2,16 @@
     "compilerOptions": {
         "target": "ESNext",
         "module": "ESNext",
-        "moduleResolution": "node",
         "sourceMap": true,
-        "outDir": "./tsbuild",
         "lib": ["ES2019", "dom"],
         "strict": true,
-        /*"baseUrl": "./src",*/
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noImplicitAny": true,
         "noImplicitReturns": true,
         "experimentalDecorators": true
-    }
+    },
+    "include": [
+        "src/**/*.ts"
+    ]
 }

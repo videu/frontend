@@ -24,29 +24,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Webvideo Made in Germany">
 
-    <!-- for window._videuEnv -->
+    <!-- for window._videu and window.process -->
     <script src="env.js"></script>
 
     <!-- Do not edit, set `basePath` in polymer.json instead -->
     <base href="/">
 
     <link rel="manifest" href="manifest.json">
-
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('service-worker.js', {
-                    scope: '/',
-                });
-            });
-        }
-
-        window.process = {
-            env: {
-                NODE_ENV: 'production',
-            },
-        };
-    </script>
 
     <style>
         * {
@@ -73,12 +57,11 @@
         Please enable JavaScript to view this website.
     </noscript>
 
-    <script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js">
     </script>
-    <script type="module" src="tsbuild/components/vid-eu.js"></script>
+    <script type="module" src="./src/components/vid-eu.ts"></script>
     <script>
         /* The stupid-user-protect-i-nator™ */
-        window._videuEnv === 'development' || console.log(
+        process.env.NODE_ENV === 'development' || console.log(
             '%c\u26a0 %cSTOP%c \u26a0%c\n'
             + '%cThis is a browser feature intended for web developers only. '
             + 'If someone told you to paste something into this window, '

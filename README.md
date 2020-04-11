@@ -29,6 +29,6 @@ You might be able to run it on Windows, but this is not supported and highly
 discouraged.  If you absolutely need to, use the Windows Subsystem for Linux.
 
 Clone the repository, open a shell in the project's root directory and type
-`npm i` to install all dependencies.  Then, type `npm start` to spin up a local
-development server.  You might want to run the corresponding
+`npm i` to install all dependencies.  Then, type `npm start` to spin up a
+local development server.  You might want to run the corresponding
 [backend server](https://github.com/videu/backend) as well.

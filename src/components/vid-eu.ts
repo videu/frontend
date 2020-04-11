@@ -20,7 +20,6 @@
  */
 
 import { html, css, property, PropertyValues, customElement } from 'lit-element';
-import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { installOfflineWatcher } from 'pwa-helpers/network.js';
 import { installRouter } from 'pwa-helpers/router.js';
@@ -100,11 +99,6 @@ export class VidEu extends connect(store)(PathRouter) {
         </div>
         <footer>Connection: ${this._offline ? 'offline' : 'online'}</footer>
         `;
-    }
-
-    constructor() {
-        super();
-        setPassiveTouchGestures(true);
     }
 
     /**

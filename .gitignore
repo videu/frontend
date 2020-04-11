@@ -1,8 +1,8 @@
 .vscode/
-build/
+dist/
 tsbuild/
 node_modules/
-text/integration/screenshots-current/
+test/integration/screenshots-current/
 _site/
 .DS_store
 /.env

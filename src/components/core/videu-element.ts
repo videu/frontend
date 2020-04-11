@@ -20,7 +20,6 @@
  */
 
 import { LitElement } from 'lit-element';
-import { getJSON } from '../../util/xhr';
 
 interface LanguageMap {
     [propName: string]: string;
@@ -118,12 +117,10 @@ export class VideuElement extends LitElement {
     public static set locale(locale: LocaleLike) {
         this._locale = locale;
 
-        getJSON(`/intl/${locale}/strings.json`)
-            .then(json => this._langMap = json)
-            .catch(console.error);
 
         this._numberFormat = new Intl.NumberFormat(this._locale);
         this._dateTimeFormat = new Intl.DateTimeFormat(this._locale);
+        throw new Error('Not implemented yet');
     }
 
     /**
