@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development gulp start",
+    "start:build": "NODE_ENV=production es-dev-server --root-dir dist --app-index index.html --compatibility none --open",
     "build": "NODE_ENV=production gulp build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:integration": "tsc; mocha test/integration --timeout=10000"
