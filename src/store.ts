@@ -36,36 +36,30 @@ import { VideoAction } from './actions/video';
 import appReducer, { AppState } from './reducers/app';
 import videoReducer, { VideoState } from './reducers/video';
 
+/**
+ * The top-level state of the application.
+ */
 export interface RootState {
     app?: AppState;
     video?: VideoState;
 }
 
+/** Any action supported by the application. */
 export type RootAction =
     AppAction
     | VideoAction;
 
-/*-----------------------------------------------------------------------*/
-/*
- * This is just for the Redux DevTools Chrome extension
+/**
+ * This is just for the Redux DevTools Chrome/Firefox extension,
  * see <https://github.com/zalmoxisus/redux-devtools-extension>
  */
-
-declare global {
-    interface Window {
-        process?: Object;
-        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-    }
-}
-
 const devCompose: <Ext0, Ext1, StateExt0, StateExt1>(
     f1: StoreEnhancer<Ext0, StateExt0>,
     f2: StoreEnhancer<Ext1, StateExt1>
 ) => StoreEnhancer<Ext0 & Ext1, StateExt0 & StateExt1> =
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-/*-----------------------------------------------------------------------*/
 
-/** The app's root redux store. */
+/** The app's redux store. */
 export const store = createStore(
     state => state as Reducer<RootState, RootAction>,
     devCompose(

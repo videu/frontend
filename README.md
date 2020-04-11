@@ -37,3 +37,6 @@ NOTE: If the opened browser window is empty, you have to manually refresh the
 page once.  That can happen if `es-dev-server` opens the browser window before
 `tsc` has finished building.  You only have to do this the first time because
 `es-dev-server` is watching changes in the output directory of `tsc`.
+
+You might also want to install the
+[Redux DevTools browser extension](https://github.com/zalmoxisus/redux-devtools-extension).
