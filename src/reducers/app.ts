@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
 /**
- * @file The main application reducer.
+ * The main application reducer.
+ * @packageDocumentation
  *
  * @license
  * Copyright (c) 2020 Felix Kopp <sandtler@sandtler.club>
@@ -21,7 +22,20 @@
 
 import { Reducer } from 'redux';
 
-import { APP_UPDATE_PATH, APP_UPDATE_OFFLINE } from '../actions/app';
+import {
+    APP_UPDATE_PATH,
+    APP_UPDATE_OFFLINE,
+} from '../actions/app';
+import {
+    APP_LOGIN_SEND,
+    APP_LOGIN_RECV,
+    APP_LOGIN_POPUP,
+    APP_LOGOUT,
+} from '../actions/app-auth';
+import appAuthReducer, {
+    AppAuthState,
+    INITIAL_AUTH_STATE,
+} from './app-auth';
 import { RootAction } from '../store';
 
 /**
@@ -32,32 +46,51 @@ export interface AppState {
     path: string[];
     /** Whether we are currently offline. */
     offline: boolean;
+    /** Information about the current login session, if any. */
+    auth: AppAuthState;
 }
 
-/** The main app's initial redux state. */
+/** The `app` part of the initial redux state. */
 const INITIAL_STATE: AppState = {
     path: [''],
     offline: false,
+    auth: INITIAL_AUTH_STATE,
 };
 
-/** The main application reducer. */
+/**
+ * The main application reducer.
+ *
+ * @param state The current state.
+ * @param action The action to be performed on the state.
+ * @returns The new state.
+ */
 const appReducer: Reducer<AppState, RootAction> =
-    (state = INITIAL_STATE, action) => {
-        switch (action.type) {
-            case APP_UPDATE_PATH:
-                return {
-                    ...state,
-                    path: action.path,
-                };
+(state = INITIAL_STATE, action) => {
+    switch (action.type) {
+        case APP_LOGIN_SEND:
+        case APP_LOGIN_RECV:
+        case APP_LOGIN_POPUP:
+        case APP_LOGOUT:
+            /* TODO: Check if we need to redirect when logging out */
+            return {
+                ...state,
+                auth: appAuthReducer(state.auth, action),
+            };
 
-            case APP_UPDATE_OFFLINE:
-                return {
-                    ...state,
-                    offline: action.offline,
-                };
+        case APP_UPDATE_PATH:
+            return {
+                ...state,
+                path: action.path,
+            };
 
-            default:
-                return state;
-        }
-    };
+        case APP_UPDATE_OFFLINE:
+            return {
+                ...state,
+                offline: action.offline,
+            };
+
+        default:
+            return state;
+    }
+};
 export default appReducer;
