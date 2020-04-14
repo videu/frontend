@@ -19,17 +19,54 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { property } from 'lit-element';
+import { css, CSSResult, property, PropertyValues, CSSResultArray } from 'lit-element';
 
 import { VideuElement } from './videu-element';
 
 export abstract class PageViewElement extends VideuElement {
+
+    public static get styles(): CSSResult | CSSResultArray {
+        return [
+            css`
+            :host {
+                margin: auto;
+                padding: 24px;
+            }
+            `
+        ];
+    }
 
     /**
      * Determines whether this element is currently being displayed.
      */
     @property({type: Boolean})
     public active: boolean = false;
+
+    /**
+     * If `true`, this is the fallback page if the current page was not found.
+     */
+    @property({type: Boolean})
+    public fallback: boolean = false;
+
+    /** If `true`, the page is limited to a maximum width of 640px. */
+    @property({type: Boolean})
+    public narrow: boolean = false;
+
+    /**
+     * @inheritdoc
+     * @override
+     */
+    protected updated(changedProps: PropertyValues) {
+        super.updated(changedProps);
+
+        if (changedProps.has('narrow')) {
+            if (this.narrow) {
+                this.style.maxWidth = '640px';
+            } else {
+                this.style.maxWidth = '';
+            }
+        }
+    }
 
     /**
      * @inheritdoc

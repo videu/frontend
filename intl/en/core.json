@@ -1,4 +1,9 @@
 {
     "action_ok": "OK",
-    "action_cancel": "Cancel"
+    "action_cancel": "Cancel",
+
+    "404_title": "404 Not Found",
+    "404_body": "This page doesn't seem to exist, buddy.",
+    "500_title": "500 Internal Server Error",
+    "500_body": "Looks like one of our servers has just hit its head. Or is on a buzz. Either way, a technician has already been informed and is taking care of the problem."
 }

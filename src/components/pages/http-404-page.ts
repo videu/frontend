@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
 /**
- * @file General shared styles.
+ * Component for the 404 page.
  *
  * @license
  * Copyright (c) 2020 Felix Kopp <sandtler@sandtler.club>
@@ -19,29 +19,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { css } from 'lit-element';
+import { customElement, html } from 'lit-element';
 
-export const TypographyStyles = css`
-* {
-    font-family: Roboto, sans-serif;
-    font-size: 1rem;
-}
+import { PageViewElement } from '../core/page-view-element';
+import { SharedStyles } from '../../style/shared-styles';
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Fira Sans';
-}
+/**
+ * The 404 not found page.
+ */
+@customElement('http-404-page')
+export class Http404Page extends PageViewElement {
 
-h1 {
-    font-size: 3rem;
-    margin: 24px 0;
-}
+    /**
+     * @inheritdoc
+     * @override
+     */
+    public static get styles() {
+        return [
+            super.styles,
+            SharedStyles,
+        ];
+    }
 
-h2 {
-    color: var(--color-primary-dark);
-}
+    /**
+     * @inheritdoc
+     * @override
+     */
+    protected render() {
+        return html`
+        <h1>${this.t('404_title')}</h1>
+        <p>${this.t('404_body')}</p>
+        `;
+    }
 
-a, a:visited, a:active, a:focus, a:hover {
-    font-weight: 700;
-    text-decoration: underline;
 }
-`;

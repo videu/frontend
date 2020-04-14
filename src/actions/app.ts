@@ -97,8 +97,8 @@ const loadPage: FThunkActionCreator<AppAction, [string]> =
             import('../components/pages/view-index');
             break;
         default:
-            /* TODO: Create 404 page */
-            console.error('404 Not Found');
+            import('../components/pages/http-404-page');
+            break;
     }
 };
 

@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: AGPL-3.0-or-later */
 /**
- * @file The root application component.
+ * The root application component.
+ * @packageDocumentation
  *
  * @license
  * Copyright (c) 2020 Felix Kopp <sandtler@santler.club>
@@ -101,6 +102,7 @@ export class VidEu extends connect(store)(PathRouter) {
             <main role="main" class="main-content">
                 <page-switch page="${this.page}">
                     <view-index page-name="index"></view-index>
+                    <http-404-page narrow fallback></http-404-page>
                 </page-switch>
             </main>
         </div>

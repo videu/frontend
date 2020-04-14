@@ -1,4 +1,9 @@
 {
     "action_ok": "OK",
-    "action_cancel": "Abbrechen"
+    "action_cancel": "Abbrechen",
+
+    "404_title": "404 Seite nicht gefunden",
+    "404_body": "Diese Seite scheint offenbar nicht zu existieren, Diggie.",
+    "500_title": "500 Interner Serverfehler",
+    "500_body": "Es sieht so aus als hätte sich irgendeiner unserer Server gerade den Kopf gestoßen. Oder hat noch Restalkohol von gestern Abend. Aber keine Sorge, ein Techniker wurde bereits informiert und wird sich um das Problem kümmern."
 }

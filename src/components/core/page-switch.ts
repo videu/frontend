@@ -32,8 +32,12 @@ import { SharedStyles } from '../../style/shared-styles';
  * element with the corresponding name is made visible.
  *
  * This element is intended to be embedded in a page view component that
- * extends the `PageRouter` class, which can inject its `page` property
- * directly into this one.
+ * extends the {@linkcode PageRouter} class, which then can inject
+ * {@linkcode PageRouter.page} in here.  There should also exist a page with
+ * the `fallback` flag set, which will become active if no page matches the
+ * currently requested page.
+ *
+ * Any child classes MUST inherit styles.
  */
 @customElement('page-switch')
 export class PageSwitch extends VideuElement {
@@ -44,7 +48,7 @@ export class PageSwitch extends VideuElement {
      * matches this value to become visible, the rest is hidden.
      */
     @property({type: String})
-    public page?: string;
+    public page: string = '';
 
     @query('#pages')
     private pagesSlot?: HTMLSlotElement;
@@ -97,12 +101,22 @@ export class PageSwitch extends VideuElement {
             return;
         }
 
+        let fallback: Element | null = null;
         for (const elem of pageElems) {
             if (elem.getAttribute('page-name') === this.page) {
                 elem.setAttribute('active', '');
+                fallback = null; /* fallback never null if page was found */
             } else {
                 elem.removeAttribute('active');
+                if (fallback === null && elem.hasAttribute('fallback')) {
+                    fallback = elem;
+                }
             }
+        }
+
+        /* If fallback is not null at this point, we hit a 404 */
+        if (fallback !== null) {
+            fallback.setAttribute('active', '');
         }
     }
 
